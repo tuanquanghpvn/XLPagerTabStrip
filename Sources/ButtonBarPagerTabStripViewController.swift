@@ -67,6 +67,10 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarItemsShouldFillAvailableWidth = true
         // only used if button bar is created programaticaly and not using storyboards or nib files
         public var buttonBarHeight: CGFloat?
+        
+        // TODO: QuangTT Custom
+        public var buttonBarViewIsShowBottomLineView = false
+        public var buttonBarViewColorOfBottomLineView: UIColor?
     }
 
     public var style = Style()
@@ -136,6 +140,15 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
 
         if buttonBarView.superview == nil {
             view.addSubview(buttonBarView)
+        }
+        // TODO: QuangTT Custom Bottom Line View
+        if settings.style.buttonBarViewIsShowBottomLineView {
+            let buttonBarHeight = settings.style.buttonBarHeight ?? 44
+            let bottomLineRect = CGRect(x: 0, y: buttonBarHeight - 1, width: view.frame.size.width, height: 0.5)
+            let bottomLineView = UIView(frame: bottomLineRect)
+            let borderColor = settings.style.buttonBarViewColorOfBottomLineView ?? UIColor(red: 64 / 255.0, green: 64 / 255.0, blue: 64 / 255.0, alpha: 0.1)
+            bottomLineView.backgroundColor = borderColor
+            view.addSubview(bottomLineView)
         }
         if buttonBarView.delegate == nil {
             buttonBarView.delegate = self
